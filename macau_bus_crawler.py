@@ -182,9 +182,8 @@ def parse_route_page(html):
                           'position': float(top.group(1)) if top else None})
     return stations, buses
 
-
+# parse pages: extract stations and buses from pages table, write into stations and buses tables
 def parse_pages(con):
-    """把 pages 表里没提取过的源码，正则提取后写入 stations / buses。返回提取页数。"""
     rows = con.execute("SELECT id, html FROM pages WHERE parsed = 0").fetchall()
     for page_id, gz in rows:
         html = gzip.decompress(gz).decode("utf-8")
