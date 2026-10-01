@@ -1,0 +1,12 @@
+# 运行时产物
+macau_bus.db
+export_data/
+
+# Python
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+
+# IDE
+.idea/
+.vscode/
