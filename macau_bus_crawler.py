@@ -7,9 +7,9 @@ Design:
   2. regular expression - extract stations and buses, save into stations and buses tables
 
 Usage(in terminal): 
-    E:\\Anaconda\\python.exe macau_bus_crawler.py
-    E:\\Anaconda\\python.exe macau_bus_crawler.py --routes 26A 3 18 --interval 1200
-    E:\\Anaconda\\python.exe macau_bus_crawler.py --minutes 5
+    python macau_bus_crawler.py
+    python macau_bus_crawler.py --routes 26A 3 18 --interval 1200
+    python macau_bus_crawler.py --minutes 5
 
 Param: 
     --routes        route (default 26A 3 18)
@@ -103,13 +103,20 @@ def make_driver(headless=True):
 
 # construct a url for direction of a route
 def route_url(route, direction):
-    """构造某路线某方向的网址。"""
     return (BASE_URL + "routeLine.html?routeName=%s&direction=%d&language=zh-tw"
             "&ver=3.8.6&routeType=0&fromDzzp=false" % (route, direction))
 
-#  open page. 
+#  open page.
 def get_page_source(driver, route, direction):
-    driver.get(route_url(route, direction))
+    try:
+        driver.get(route_url(route, direction))
+    except UnexpectedAlertPresentException:
+        # "no data" alert popped up right after page loading -> skip
+        try:
+            driver.switch_to.alert.accept()
+        except Exception:
+            pass
+        return None
     deadline = time.time() + 25
     while time.time() < deadline:
         try:
@@ -118,8 +125,14 @@ def get_page_source(driver, route, direction):
                 time.sleep(4)
                 return driver.page_source
         except UnexpectedAlertPresentException:
-            driver.switch_to.alert.accept()
-            return None     # no data in that direction -> retutn None
+            # no data: the site pops up a "no data" alert.
+            # ChromeDriver may have auto-dismissed the alert already,
+            # so accept() may fail -> just ignore it.
+            try:
+                driver.switch_to.alert.accept()
+            except Exception:
+                pass
+            return None     # no data in that direction -> return None
         time.sleep(1)
     return None
 
@@ -252,7 +265,7 @@ def run_week(routes, interval, db_path, headless=True, run_minutes=None):
 # Param
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description="Macau bus (DSAT) crawler")
-    ap.add_argument("--routes", nargs="+", default=["MT4", "1", "25B"])
+    ap.add_argument("--routes", nargs="+", default=["3", "26A", "17"])
     ap.add_argument("--interval", type=int, default=600)
     ap.add_argument("--minutes", type=int, default=None)
     ap.add_argument("--db", default="macau_bus.db")
