@@ -27,6 +27,11 @@ from selenium.common.exceptions import UnexpectedAlertPresentException
 
 BASE_URL = "https://bis.dsat.gov.mo:37812/macauweb/"
 
+# ------------------------------------------------------------
+# Chrome connect DIRECTLY (bypass proxy), other apps are NOT affected.
+# If VPN is global / TUN mode, this option has no effect - need to turn off VPN while crawling
+BYPASS_PROXY = True
+
 
 def now_str():
     return datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -97,6 +102,9 @@ def make_driver(headless=True):
     opts.add_argument("--window-size=1280,2000")
     opts.add_argument("--lang=zh-cn")
     opts.add_argument("--no-first-run")
+    if BYPASS_PROXY:
+        # connect directly, bypass system proxy (VPN)
+        opts.add_argument("--no-proxy-server")
     d = webdriver.Chrome(options=opts)
     d.set_page_load_timeout(60)
     return d
