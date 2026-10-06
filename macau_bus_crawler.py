@@ -33,8 +33,8 @@ BYPASS_PROXY = True
 
 # ---------- Timing Crawler Config ----------
 START_TIME = "09:00"      # start crawling at this time every day (24h, e.g. "09:00")
-END_TIME   = "21:00"      # stop crawling at this time every day (auto rest, next day again)
-DAYS       = 7            # how many days to crawl continuously
+END_TIME   = "23:00"      # stop crawling at this time every day (auto rest, next day again)
+DAYS       = 1            # how many days to crawl continuously
 # -------------------------------------------
 
 def now_str():
@@ -231,14 +231,15 @@ def crawl_once(driver, con, routes):
 # continous crawling
 def wait_until(hhmm):
     """Wait until hh:mm today; if that time has passed, wait until tomorrow."""
-    while True:
-        now = datetime.now()
-        target = now.replace(hour=int(hhmm[:2]), minute=int(hhmm[3:]),
-                             second=0, microsecond=0)
-        if target <= now:                       # today's time already passed -> tomorrow
-            target += timedelta(days=1)
-        print("== Waiting until %s to start crawling ==" % target.strftime("%Y-%m-%d %H:%M"))
-        time.sleep((target - now).total_seconds())
+    now = datetime.now()
+    target = now.replace(hour=int(hhmm[:2]), minute=int(hhmm[3:]),
+                         second=0, microsecond=0)
+    if target <= now:                       # today's time already passed -> tomorrow
+        target += timedelta(days=1)
+    wait_sec = (target - now).total_seconds()
+    print("== Waiting until %s to start crawling ==" % target.strftime("%Y-%m-%d %H:%M"))
+    if wait_sec > 0:
+        time.sleep(wait_sec)
 
 
 def run_schedule(routes, interval, db_path, headless=True):
