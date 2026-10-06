@@ -38,7 +38,7 @@ pip install -r requirements.txt
 ### 3. 正式爬取
 
 ```bash
-E:\Anaconda\python.exe macau_bus_crawler_simple.py
+python macau_bus_crawler_simple.py
 ```
 
 可选参数：
@@ -53,7 +53,7 @@ E:\Anaconda\python.exe macau_bus_crawler_simple.py
 ### 4. 导出 CSV 查看数据
 
 ```bash
-E:\Anaconda\python.exe export_to_csv.py
+python export_to_csv.py
 ```
 
 生成 4 个文件到 `export_data/`：pages / stations / buses / summary（汇总表）。
