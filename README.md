@@ -1,9 +1,10 @@
 # 巴士报站爬虫（Selenium + 正则提取 + SQLite）
 
 课程作业项目：爬取「巴士报站」网站（https://bis.dsat.gov.mo:37812/macauweb/），
-用 Selenium 抓取动态渲染的页面源码，用正则表达式提取站点与车辆信息，存入 SQLite 数据库，并支持导出 CSV 和可视化。
+用 Selenium 抓取动态渲染的页面源码，用正则表达式提取站点与车辆信息，存入 SQLite 数据库，并支持导出 CSV 和 Streamlit 可视化。
 
 ## 版本更新
+- **2026.10.12** - 新增 group_export 文件夹（用于数据库数据导出），新增 dashboard 文件夹（用于可视化的数据展示）
 - **2026.10.6** - 修复 `wait_until` 内部bug
 - **2026.10.5** - 删除 `--minutes`，新增 `wait_until` - 等到指定时间才继续；如果那个时间已过，就自动等到明天同一时刻。
 - **2026.10.5** - 新增 `--no-proxy-server` —— 直连网络（绕过系统代理），电脑其他程序不受影响。
@@ -58,6 +59,19 @@ python export_to_csv.py
 ```
 
 生成 4 个文件到 `export_data/`：pages / stations / buses / summary（汇总表）。
+
+### 5. 打开 Streamlit 仪表盘
+
+把组员提交的 `.db` 或解压后的 CSV 文件放进 `dashboard/submissions/` 后运行：
+
+```bash
+cd dashboard
+streamlit run streamlit_app.py
+```
+
+如果 `submissions/` 为空，仪表盘会自动读取项目根目录的 `macau_bus.db` 做预览。
+界面代码全部在 `dashboard/streamlit_app.py`，统计代码在
+`dashboard/build_dashboard.py`，没有额外的 HTML 模板。
 
 
 
