@@ -32,8 +32,8 @@ BASE_URL = "https://bis.dsat.gov.mo:37812/macauweb/"
 BYPASS_PROXY = True
 
 # ---------- Timing Crawler Config ----------
-START_TIME = "09:00"      # start crawling at this time every day (24h, e.g. "09:00")
-END_TIME   = "23:00"      # stop crawling at this time every day (auto rest, next day again)
+START_TIME = "15:00"      # start crawling at this time every day (24h, e.g. "09:00")
+END_TIME   = "19:00"      # stop crawling at this time every day (auto rest, next day again)
 DAYS       = 1            # how many days to crawl continuously
 # -------------------------------------------
 
