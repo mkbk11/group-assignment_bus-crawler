@@ -1,7 +1,8 @@
-# 安装：pip install -r requirements.txt
-# （Python 标准库 sqlite3 / re / gzip / os 无需安装）
+# Install: pip install -r requirements.txt
+# Python standard libraries such as sqlite3, re, gzip and os do not need install.
 
 selenium>=4.6
 pandas>=1.1
 matplotlib>=3.3
 notebook>=6.0
+streamlit>=1.30
