@@ -10,3 +10,10 @@ __pycache__/
 # IDE
 .idea/
 .vscode/
+
+# 不要文件
+test.ipynb
+.html
+/notebook_snippets
+/data_Wang Hongjie
+/dashboard
