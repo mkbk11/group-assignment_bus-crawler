@@ -4,6 +4,7 @@
 用 Selenium 抓取动态渲染的页面源码，用正则表达式提取站点与车辆信息，存入 SQLite 数据库，并支持导出 CSV 和 Streamlit 可视化。
 
 ## 版本更新
+- **2026.10.21** - 新增 group_export 组员数据，新增 group_assignment-macau_bus_crawler_10.20.ipynb，删除 dashboard 等网页文件
 - **2026.10.12** - 新增 group_export 文件夹（用于数据库数据导出），新增 dashboard 文件夹（用于可视化的数据展示）
 - **2026.10.6** - 修复 `wait_until` 内部bug
 - **2026.10.5** - 删除 `--minutes`，新增 `wait_until` - 等到指定时间才继续；如果那个时间已过，就自动等到明天同一时刻。
@@ -52,36 +53,12 @@ python macau_bus_crawler_simple.py
 | `--db` | macau_bus.db | 数据库文件名 |
 | `--show-browser` | 无 | 加上则弹出浏览器窗口（默认后台运行） |
 
-### 4. 导出 CSV 查看数据
-
-```bash
-python export_to_csv.py
-```
-
-生成 4 个文件到 `export_data/`：pages / stations / buses / summary（汇总表）。
-
-### 5. 打开 Streamlit 仪表盘
-
-把组员提交的 `.db` 或解压后的 CSV 文件放进 `dashboard/submissions/` 后运行：
-
-```bash
-cd dashboard
-streamlit run streamlit_app.py
-```
-
-如果 `submissions/` 为空，仪表盘会自动读取项目根目录的 `macau_bus.db` 做预览。
-界面代码全部在 `dashboard/streamlit_app.py`，统计代码在
-`dashboard/build_dashboard.py`，没有额外的 HTML 模板。
 
 
 
 ## 注意事项
 
-- **网站证书**：该网站证书不受信任，脚本已加 `--ignore-certificate-errors`，不要删除
 - **单向路线**：部分路线（如 25、33）是环线建模，只有方向 0 有数据；方向 1 会弹 `no data`，脚本自动跳过
 - **VPN / 代理**：电脑开着 VPN（系统代理模式）时网站可能访问不了。脚本顶部 `BYPASS_PROXY = True` 让爬虫直连网络、绕过代理，只影响爬虫自己的浏览器，电脑其他程序照常使用；若 VPN 是全局/TUN 模式则此参数无效，需在 VPN 客户端排除 Chrome 或爬取时临时关闭 VPN
 - **晚间数据少**：澳门巴士一般运营到 23:30 左右，夜里车辆数为 0 属正常
 - **电脑不要睡眠**：连续爬取期间请把电源设置改为"从不睡眠"，否则会空窗
-- **网站限流**：若连续频繁测试，网站可能临时拒绝访问（页面能打开但无数据），属正常现象，停一会儿或第二天再跑即可
-- **旧版数据库**：若之前用旧版本代码生成过数据库（表结构含 snapshot_id），脚本检测到会自动改名重建，不影响使用
-
