@@ -32,9 +32,9 @@ BASE_URL = "https://bis.dsat.gov.mo:37812/macauweb/"
 BYPASS_PROXY = True
 
 # ---------- Timing Crawler Config ----------
-START_TIME = "15:00"      # start crawling at this time every day (24h, e.g. "09:00")
-END_TIME   = "19:00"      # stop crawling at this time every day (auto rest, next day again)
-DAYS       = 1            # how many days to crawl continuously
+START_TIME = "08:00"      # start crawling at this time every day (24h, e.g. "09:00")
+END_TIME   = "22:00"      # stop crawling at this time every day (auto rest, next day again)
+DAYS       = 4            # how many days to crawl continuously
 # -------------------------------------------
 
 def now_str():
@@ -296,7 +296,7 @@ def run_schedule(routes, interval, db_path, headless=True):
 # Param
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description="Macau bus (DSAT) crawler")
-    ap.add_argument("--routes", nargs="+", default=["3", "26A", "17"])
+    ap.add_argument("--routes", nargs="+", default=["25B", "701X", "3", "26A", "17", "29", "25BS", "60"])
     ap.add_argument("--interval", type=int, default=600)
     ap.add_argument("--db", default="macau_bus.db")
     ap.add_argument("--show-browser", dest="headless", action="store_false", default=True)

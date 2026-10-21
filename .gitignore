@@ -1,6 +1,6 @@
 # 运行时产物
 macau_bus.db
-export_data/
+assignment_demo.db
 
 # Python
 __pycache__/
