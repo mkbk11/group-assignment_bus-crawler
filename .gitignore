@@ -13,7 +13,9 @@ __pycache__/
 
 # 不要文件
 test.ipynb
-.html
+*.html
 /notebook_snippets
 /data_Wang Hongjie
 /dashboard
+jupyter代码详解.md
+*.rar
