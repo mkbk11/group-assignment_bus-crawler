@@ -1,8 +1,20 @@
-# Install: pip install -r requirements.txt
-# Python standard libraries such as sqlite3, re, gzip and os do not need install.
+# Install: python -m pip install -r requirements.txt
+# Python standard libraries (re, sqlite3, gzip, zipfile, etc.) are included with Python.
 
+# Web crawling
 selenium>=4.6
-pandas>=1.1
-matplotlib>=3.3
+
+# Data analysis and visualization
+numpy>=1.19
+pandas>=1.4
+matplotlib>=3.4
+seaborn>=0.11
+
+# Notebook execution and styled DataFrame output
+ipython>=7.0
+ipykernel>=5.3
 notebook>=6.0
+jinja2>=3.0
+
+# Local Streamlit dashboard
 streamlit>=1.30
